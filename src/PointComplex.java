@@ -26,6 +26,22 @@ public class PointComplex {
         this.imaginary = imaginary;
     }
 
+    public PointComplex sum(PointComplex anotherPoint){
+        return new PointComplex((this.real+anotherPoint.getReal()), (this.imaginary+anotherPoint.getImaginary()));
+    }
+
+    public static PointComplex sum(PointComplex point, PointComplex anotherPoint){
+        return new PointComplex((point.getReal()+anotherPoint.getReal()), (point.getImaginary()+anotherPoint.getImaginary()));
+    }
+
+    public PointComplex sub(PointComplex anotherPoint){
+        return new PointComplex((this.real-anotherPoint.getReal()), (this.imaginary-anotherPoint.getImaginary()));
+    }
+
+    public static PointComplex sub(PointComplex point, PointComplex anotherPoint){
+        return new PointComplex((point.getReal()-anotherPoint.getReal()), (point.getImaginary()-anotherPoint.getImaginary()));
+    }
+
     public String toString(){
         if(imaginary==0) return String.format("%.1fi", real);
         if(imaginary<0) return String.format("%.1f%.1fi", real, imaginary);

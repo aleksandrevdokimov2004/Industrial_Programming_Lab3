@@ -19,9 +19,9 @@ public class Triangle {
     }
 
     public String toString(){
-        return String.format("Координаты:\tA:\tx = %f\ty = %f\t\t", A.x, A.y) +
-                String.format("B:\tx = %f\ty = %f\t\t", B.x, B.y) +
-                String.format("C:\tx = %f\ty = %f\n", C.x, C.y) +
+        return String.format("Координаты:\tA:\t%s\t\t", A) +
+                String.format("B:\t%s\t\t", B) +
+                String.format("C:\t%s\n", C) +
                 String.format("Длины:\tAB = %f\tBC = %f\tCA  = %f\n",
                         Point2d.getDistance(A,B),
                         Point2d.getDistance(B,C),
@@ -29,11 +29,11 @@ public class Triangle {
     }
 
     public double findSq(){
-        return 0.5*Math.abs((B.x-A.x)*(C.y-A.y)-(C.x-A.x)*(B.y-A.y));
+        return 0.5*Math.abs((B.getX()-A.getX())*(C.getY()-A.getY())-(C.getX()-A.getX())*(B.getY()-A.getY()));
     }
 
     public double findP(){
-        return Math.sqrt(Math.pow(B.x - A.x,2) + Math.pow(B.y - A.y,2));
+        return Math.sqrt(Math.pow(B.getX() - A.getX(),2) + Math.pow(B.getY() - A.getY(),2));
     }
 
     public void setPoints(Point2d newPointA,Point2d newPointB,Point2d newPointC){

@@ -21,7 +21,7 @@ public class HouseGenerator {
     public String toString(){
         String output = "";
         for(House each : houses)
-            output += each + "\n";
+            output = output.concat(each+"\n");
         return output;
     }
 
@@ -62,7 +62,7 @@ public class HouseGenerator {
     }
 
     public void printHousesWithSquareMoreThan(float sq){
-        System.out.printf("Квартиры с площадью больше %f\n", sq);
+        System.out.printf("Квартиры с площадью больше %.2f\n", sq);
         for(House one : houses)
             if(one.getSquare()>sq)
                 System.out.println(one);

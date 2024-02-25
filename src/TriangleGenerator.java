@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class TriangleGenerator {
@@ -65,6 +66,11 @@ public class TriangleGenerator {
         recountTriangles();
     }
 
+    public void setTriangles(Triangle[] triangles){
+        this.count = triangles.length;
+        this.triangles = triangles;
+    }
+
     public void recountTriangles(){
         equilateralTriangles = new ArrayList<>();
         isoscelesTriangle = new ArrayList<>();
@@ -84,6 +90,25 @@ public class TriangleGenerator {
             return null;
         }
         return triangles[id];
+    }
+
+    public void addNew(Triangle newTriangle){
+        triangles = Arrays.copyOf(triangles, triangles.length+1);
+        triangles[triangles.length-1]=newTriangle;
+    }
+
+    public void eraseById(int id){
+        if(id<0 || id>= triangles.length) {
+            System.out.print("Ошибка: Выход за границы массива\tНичего не изменено\n");
+            return;
+        }
+        for(int i = 0, k = 0; i < triangles.length; i++){
+            if (i == id) {
+                continue;
+            }
+            triangles[k++] = triangles[i];
+        }
+        triangles = Arrays.copyOf(triangles, triangles.length-1);
     }
 
     public static void printList(ArrayList<Triangle> list){
