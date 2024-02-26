@@ -20,11 +20,9 @@ public class Main {
 
     public static void Task2(){
         TriangleGenerator trGen = new TriangleGenerator(10);
-        System.out.printf("Площадь 1-ого треугольника = %f\n", trGen.getTriangleById(1).findSq());
-        System.out.printf("Периметр 2-ого треугольника = %f\n", trGen.getTriangleById(2).findSq());
         trGen.printCountOfSorted();
         trGen.recountTriangles();
-        System.out.println();
+        System.out.println("Минимальные и максимальные по площади и периметру другие треугольники");
         TriangleGenerator.printMinNMaxForGroup(trGen.getOtherTriangles());
     }
 
