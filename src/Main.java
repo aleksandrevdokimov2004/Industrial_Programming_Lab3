@@ -12,18 +12,40 @@ public class Main {
     public static void Task1(){
         HouseGenerator houseGen = new HouseGenerator(3);
         houseGen.addNew(new House(0,6,15.f,3,3,1));
-        houseGen.printHousesWithRooms(3);
-        houseGen.printHousesWithRoomsAndFloorRange(3,2,5);
-        houseGen.printHousesWithSquareMoreThan(10.f);
+        System.out.println("Список домов с 3 комнатами");
+        HouseGenerator.printList(houseGen.getHousesWithRooms(3));
+        System.out.println("Список домов с 3 комнатами между 2 и 5 этажом");
+        HouseGenerator.printList(houseGen.getHousesWithRoomsAndFloorRange(3,2,5));
+        System.out.println("Список домов с площадью более 10 м^2");
+        HouseGenerator.printList(houseGen.getHousesWithSquareMoreThan(10.f));
+
         System.out.printf("\nСписок домов\n%s", houseGen);
     }
 
     public static void Task2(){
         TriangleGenerator trGen = new TriangleGenerator(10);
-        trGen.printCountOfSorted();
-        trGen.recountTriangles();
-        System.out.println("Минимальные и максимальные по площади и периметру другие треугольники");
-        TriangleGenerator.printMinNMaxForGroup(trGen.getOtherTriangles());
+
+        System.out.printf("Количество равносторонних треугольников %d\n", trGen.getEquilateralTriangles().size());
+        System.out.printf("Количество равнобедренный треугольников %d\n", trGen.getIsoscelesTriangle().size());
+        System.out.printf("Количество прямоугольных треугольников %d\n", trGen.getRightTriangle().size());
+        System.out.printf("Количество других треугольников %d\n", trGen.getOtherTriangles().size());
+
+        if(trGen.getTriangles().length!=0) {
+            Triangle minSq = TriangleGenerator.getMinTriangleBySquare(trGen.getOtherTriangles());
+            Triangle maxSq = TriangleGenerator.getMaxTriangleBySquare(trGen.getOtherTriangles());
+
+            Triangle minP = TriangleGenerator.getMinTriangleByPerimeter(trGen.getOtherTriangles());
+            Triangle maxP = TriangleGenerator.getMaxTriangleByPerimeter(trGen.getOtherTriangles());
+
+            if(minSq!=null)
+                System.out.println("Треугольник с минимальной площадью:\n" + minSq + "Площадь: " + minSq.findSq() + "\n");
+            if(maxSq!=null)
+                System.out.println("Треугольник с максимальной площадью:\n" + maxSq + "Площадь: " + maxSq.findSq() + "\n");
+            if(minP!=null)
+                System.out.println("Треугольник с минимальным периметром:\n" + minP + "Периметр: " + minP.findP() + "\n");
+            if(maxP!=null)
+                System.out.println("Треугольник с максимальным периметром:\n" + maxP + "Периметр: " + maxP.findP() + "\n");
+        }
     }
 
     public static void Task3(){

@@ -1,12 +1,12 @@
 public class PointComplex {
     private double real, imaginary;
 
-    PointComplex(double real, double imaginary){
+    public PointComplex(double real, double imaginary){
         this.real = real;
         this.imaginary = imaginary;
     }
     
-    PointComplex(){
+    public PointComplex(){
         this(0,0);
     }
 
@@ -60,5 +60,4 @@ public class PointComplex {
     public static double getDistFromOneToAnotherPoint(PointComplex onePoint, PointComplex secondPoint){
         return Math.sqrt(Math.pow(onePoint.getReal()-secondPoint.getReal(), 2)+Math.pow(onePoint.getImaginary()-secondPoint.getImaginary(), 2));
     }
-
 }

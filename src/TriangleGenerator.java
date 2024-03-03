@@ -1,3 +1,4 @@
+import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -15,9 +16,7 @@ public class TriangleGenerator {
         return equilateralTriangles;
     }
 
-    public ArrayList<Triangle> getIsoscelesTriangle(){
-        return isoscelesTriangle;
-    }
+    public ArrayList<Triangle> getIsoscelesTriangle(){ return isoscelesTriangle; }
 
     public ArrayList<Triangle> getRightTriangle(){
         return rightTriangle;
@@ -27,7 +26,7 @@ public class TriangleGenerator {
         return other;
     }
 
-    TriangleGenerator(int count, double origin, double bounds){
+    public TriangleGenerator(int count, double origin, double bounds){
         Random rd = new Random();
         this.count = count;
         triangles = new Triangle[count];
@@ -46,15 +45,15 @@ public class TriangleGenerator {
         recountTriangles();
     }
 
-    TriangleGenerator(int count){
+    public TriangleGenerator(int count){
         this(count, 0,1);
     }
 
-    TriangleGenerator(){
+    public TriangleGenerator(){
         this(0, 0,1);
     }
 
-    TriangleGenerator(Triangle[] triangles){
+    public TriangleGenerator(Triangle[] triangles){
         this.count = triangles.length;
         this.triangles = triangles;
 
@@ -71,6 +70,10 @@ public class TriangleGenerator {
         this.triangles = triangles;
     }
 
+    public Triangle[] getTriangles(){
+        return triangles;
+    }
+
     public void recountTriangles(){
         equilateralTriangles = new ArrayList<>();
         isoscelesTriangle = new ArrayList<>();
@@ -85,23 +88,20 @@ public class TriangleGenerator {
     }
 
     public Triangle getTriangleById(int id){
-        if(id < 0 || id>triangles.length) {
-            System.out.print("Ошибка: Выход за границы массива\n");
+        if(id < 0 || id>triangles.length)
             return null;
-        }
         return triangles[id];
     }
 
     public void addNew(Triangle newTriangle){
         triangles = Arrays.copyOf(triangles, triangles.length+1);
         triangles[triangles.length-1]=newTriangle;
+        recountTriangles();
     }
 
-    public void eraseById(int id){
-        if(id<0 || id>= triangles.length) {
-            System.out.print("Ошибка: Выход за границы массива\tНичего не изменено\n");
-            return;
-        }
+    public boolean eraseById(int id){
+        if(id<0 || id>= triangles.length)
+            return false;
         for(int i = 0, k = 0; i < triangles.length; i++){
             if (i == id) {
                 continue;
@@ -109,41 +109,65 @@ public class TriangleGenerator {
             triangles[k++] = triangles[i];
         }
         triangles = Arrays.copyOf(triangles, triangles.length-1);
+        recountTriangles();
+        return true;
     }
 
     public static void printList(ArrayList<Triangle> list){
-        if(list.isEmpty()) return;
         for(Triangle one : list) {
             System.out.printf("%s\n", one);
         }
     }
 
-    public void printCountOfSorted(){
-        recountTriangles();
-        System.out.printf("Количество равносторонних треугольников %d\n", equilateralTriangles.size());
-        System.out.printf("Количество равнобедренный треугольников %d\n", isoscelesTriangle.size());
-        System.out.printf("Количество прямоугольных треугольников %d\n", rightTriangle.size());
-        System.out.printf("Количество других треугольников %d\n", other.size());
+    public static Triangle getMinTriangleBySquare(ArrayList<Triangle> list) {
+        if(list.isEmpty()) { return null; }
+        Triangle minSq = list.getFirst();
+        double minSqValue = list.getFirst().findSq();
+        for(Triangle one : list){
+            if(one.findSq() < minSqValue) {
+                minSq=one;
+                minSqValue=one.findSq();
+            }
+        }
+        return minSq;
     }
 
-    public static void printMinNMaxForGroup(ArrayList<Triangle> list){
-        if(list.isEmpty()) {
-            System.out.print("Ошибка: Массив пуст\n");
-            return;
-        }
-        Triangle minSq = list.getFirst();
+    public static Triangle getMaxTriangleBySquare(ArrayList<Triangle> list) {
+        if(list.isEmpty()) { return null; }
         Triangle maxSq = list.getFirst();
-        Triangle minP = list.getFirst();
-        Triangle maxP = list.getFirst();
+        double maxSqValue = list.getFirst().findSq();
         for(Triangle one : list){
-            if(one.findSq() > maxSq.findSq()) maxSq=one;
-            if(one.findSq() < minSq.findSq()) minSq=one;
-            if(one.findP() > maxP.findP()) maxP=one;
-            if(one.findP() < minSq.findP()) minP=one;
+            if(one.findSq() > maxSqValue) {
+                maxSq=one;
+                maxSqValue=one.findSq();
+            }
         }
-        System.out.println("Треугольник с минимальной площадью:\n" + minSq + "Площадь: " + minSq.findSq() + "\n");
-        System.out.println("Треугольник с максимальной площадью:\n" + maxSq + "Площадь: " + maxSq.findSq() + "\n");
-        System.out.println("Треугольник с минимальным периметром:\n" + minP + "Периметр: " + minP.findP() + "\n");
-        System.out.println("Треугольник с максимальным периметром:\n" + maxP + "Периметр: " + maxP.findP() + "\n");
+        return maxSq;
+    }
+
+    public static Triangle getMinTriangleByPerimeter(ArrayList<Triangle> list) {
+        if(list.isEmpty()) { return null; }
+        Triangle maxP = list.getFirst();
+        double maxPValue = list.getFirst().findP();
+        for(Triangle one : list){
+            if(one.findP() < maxPValue) {
+                maxP=one;
+                maxPValue=one.findP();
+            }
+        }
+        return maxP;
+    }
+
+    public static Triangle getMaxTriangleByPerimeter(ArrayList<Triangle> list) {
+        if(list.isEmpty()) { return null; }
+        Triangle minP = list.getFirst();
+        double minPValue = list.getFirst().findP();
+        for(Triangle one : list){
+            if(one.findP() > minPValue) {
+                minP=one;
+                minPValue=one.findP();
+            }
+        }
+        return minP;
     }
 }

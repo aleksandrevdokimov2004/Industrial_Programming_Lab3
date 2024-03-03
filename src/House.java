@@ -6,7 +6,7 @@ public class House{
     private String buildingType;
     private int lifetime;
 
-    House(int id, int number, float sq, int floor,
+    public House(int id, int number, float sq, int floor,
           int rooms, String street, String bType, int lifetime){
         this.id = id;
         this.number = number;
@@ -18,12 +18,12 @@ public class House{
         this.lifetime = lifetime;
     }
 
-    House(int id, int number, float sq, int floor, int rooms, int lifetime){
+    public House(int id, int number, float sq, int floor, int rooms, int lifetime){
         this(id,number,sq,floor,rooms,
                 "НД", "НД", lifetime);
     }
 
-    House(){
+    public House(){
         this(-1,-1,-1,-1,-1,
                 "НД", "НД", -1);
     }
