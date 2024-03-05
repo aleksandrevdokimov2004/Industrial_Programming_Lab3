@@ -44,13 +44,6 @@ public class HouseGenerator {
         return true;
     }
 
-    public static void printList(ArrayList<House> list){
-        if(list.isEmpty()) return;
-        for(House one : list) {
-            System.out.printf("%s\n", one);
-        }
-    }
-
     public ArrayList<House> getHousesWithRooms(int rooms){
         ArrayList<House> housesWith = new ArrayList<>();
         for(House one : houses){

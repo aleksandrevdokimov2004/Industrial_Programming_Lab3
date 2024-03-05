@@ -113,12 +113,6 @@ public class TriangleGenerator {
         return true;
     }
 
-    public static void printList(ArrayList<Triangle> list){
-        for(Triangle one : list) {
-            System.out.printf("%s\n", one);
-        }
-    }
-
     public static Triangle getMinTriangleBySquare(ArrayList<Triangle> list) {
         if(list.isEmpty()) { return null; }
         Triangle minSq = list.getFirst();

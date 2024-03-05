@@ -1,4 +1,13 @@
+import java.util.ArrayList;
+
 public class Main {
+
+    public static void printList(ArrayList list){
+        if(list.isEmpty()) return;
+        for(Object one : list) {
+            System.out.printf("%s\n", one);
+        }
+    }
 
     public static void main(String[] args) {
         System.out.println("Задание 1");
@@ -13,11 +22,11 @@ public class Main {
         HouseGenerator houseGen = new HouseGenerator(3);
         houseGen.addNew(new House(0,6,15.f,3,3,1));
         System.out.println("Список домов с 3 комнатами");
-        HouseGenerator.printList(houseGen.getHousesWithRooms(3));
+        printList(houseGen.getHousesWithRooms(3));
         System.out.println("Список домов с 3 комнатами между 2 и 5 этажом");
-        HouseGenerator.printList(houseGen.getHousesWithRoomsAndFloorRange(3,2,5));
+        printList(houseGen.getHousesWithRoomsAndFloorRange(3,2,5));
         System.out.println("Список домов с площадью более 10 м^2");
-        HouseGenerator.printList(houseGen.getHousesWithSquareMoreThan(10.f));
+        printList(houseGen.getHousesWithSquareMoreThan(10.f));
 
         System.out.printf("\nСписок домов\n%s", houseGen);
     }
